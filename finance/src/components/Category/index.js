@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import categoryWrapper from '../../hoc/CategoryWrapper'
+import classes from './Category.less'
 
 const Category = ({ amount, title, children }) => {
+  const variable = title === 'rest' || title === 'necessary';
+  const danger = amount <= 0;
   return (
     <div>
       <h3>{title}</h3>
-      <p>{amount}</p>
+      <p className={danger && variable ? classes.attention : ''}>{amount} руб.</p>
       {children}
     </div>
   )

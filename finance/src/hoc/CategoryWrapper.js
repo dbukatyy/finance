@@ -11,7 +11,7 @@ const categoryWrapper = (Category) => (props) => {
       children = <Form onSubmit={data => props.fixCosts('necessary', data)}/>;
       break;
     case 'total':
-      children = <Form isSingle onSubmit={props.setAmounts}/>;
+      children = !props.isAccept && <Form isSingle  onSubmit={props.setAmounts}/>;
       break;
   }
 

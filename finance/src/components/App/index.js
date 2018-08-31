@@ -7,7 +7,7 @@ import base from '../../base'
 class App extends Component {
 
   state = {
-    total: 0,
+    isAccept: false,
     category: [
       {
         title: 'total',
@@ -44,6 +44,10 @@ class App extends Component {
       state: 'category',
       asArray: true
     });
+    base.syncState(`isAccept`, {
+      context: this,
+      state: 'isAccept',
+    });
   }
 
   setAmounts = ({ amount }) => {
@@ -64,7 +68,8 @@ class App extends Component {
       });
 
     this.setState({
-      category: categories
+      category: categories,
+      isAccept: true
     })
   }
 
@@ -74,7 +79,7 @@ class App extends Component {
       .map(item => {
         if (item.title === category) {
           const spend = `${amount} - ${description}`;
-          const history = item.history ? item.history.push(spend) : [spend];
+          const history = item.history ? [...item.history, spend] : [spend];
           return {
             ...item,
             amount: item.amount - cost,
@@ -90,15 +95,15 @@ class App extends Component {
   }
 
   render() {
-    const { category } = this.state;
+    const { category, isAccept } = this.state;
     return (
        <div className={classes.container}>
           <Board
             items={category}
             setAmounts={this.setAmounts}
             fixCosts={this.fixCosts}
+            isAccept={isAccept}
           />
-          <p>detail</p>
        </div>
     );
   }
