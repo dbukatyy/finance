@@ -1,23 +1,17 @@
 import React from 'react'
+import Form from '../components/Form'
 
 const categoryWrapper = (Category) => (props) => {
   let children = null;
-
   switch(props.title) {
     case 'rest':
-      children = <p>rest</p>;
+      children = <Form onSubmit={data => props.fixCosts('rest', data)}/>;
       break;
     case 'necessary':
-      children = <p>necessary</p>;
-      break;
-    case 'charity':
-      children = <p>charity</p>;
+      children = <Form onSubmit={data => props.fixCosts('necessary', data)}/>;
       break;
     case 'total':
-      children = <p>total</p>;
-      break;
-    case 'economy':
-      children = <p>economy</p>;
+      children = <Form isSingle onSubmit={props.setAmounts}/>;
       break;
   }
 

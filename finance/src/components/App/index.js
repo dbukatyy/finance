@@ -8,7 +8,7 @@ class App extends Component {
 
   state = {
     total: 0,
-    gategory: [
+    category: [
       {
         title: 'total',
         amount: 0
@@ -39,19 +39,64 @@ class App extends Component {
   }
 
   componentDidMount() {
-    base.syncState(`gategories`, {
+    base.syncState(`categories`, {
       context: this,
-      state: 'gategory',
+      state: 'category',
       asArray: true
     });
   }
 
+  setAmounts = ({ amount }) => {
+    const total = parseFloat(amount);
+    const categories = [...this.state.category]
+      .map(category => {
+        if (category.part) {
+          return {
+            ...category,
+            amount: total * category.part
+          }
+        }
+
+        return {
+          ...category,
+          amount: total
+        }
+      });
+
+    this.setState({
+      category: categories
+    })
+  }
+
+  fixCosts = (category, { amount, description }) => {
+    const cost = parseFloat(amount);
+    const categories = [...this.state.category]
+      .map(item => {
+        if (item.title === category) {
+          const spend = `${amount} - ${description}`;
+          const history = item.history ? item.history.push(spend) : [spend];
+          return {
+            ...item,
+            amount: item.amount - cost,
+            history
+          }
+        }
+        return item
+      })
+
+    this.setState({
+      category: categories
+    })
+  }
+
   render() {
-    const { gategory } = this.state;
+    const { category } = this.state;
     return (
        <div className={classes.container}>
           <Board
-            items={gategory}
+            items={category}
+            setAmounts={this.setAmounts}
+            fixCosts={this.fixCosts}
           />
           <p>detail</p>
        </div>
