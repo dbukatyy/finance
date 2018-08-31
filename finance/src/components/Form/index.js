@@ -32,6 +32,7 @@ class Form extends Component {
          name="amount"
          min="0"
          placeholder="amount"
+         step="0.01"
          onChange={this.fieldChangeHandler}
         />
         { !isSingle &&
