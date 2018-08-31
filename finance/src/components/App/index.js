@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './App.less'
 
 import Board from '../Board'
+import base from '../../base'
 
 class App extends Component {
 
@@ -35,6 +36,14 @@ class App extends Component {
         part: .1
       },
     ]
+  }
+
+  componentDidMount() {
+    base.syncState(`gategories`, {
+      context: this,
+      state: 'gategory',
+      asArray: true
+    });
   }
 
   render() {
