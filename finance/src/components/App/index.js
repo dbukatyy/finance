@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 import classes from './App.less'
 
 import Board from '../Board'
 import base from '../../base'
+import List from '../List'
 
 class App extends Component {
 
@@ -96,7 +98,10 @@ class App extends Component {
 
   render() {
     const { category, isAccept } = this.state;
+    const rest = category.filter(category => category.title === 'rest')[0];
+    const necessary = category.filter(category => category.title === 'necessary')[0];
     return (
+      <Router>
        <div className={classes.container}>
           <Board
             items={category}
@@ -104,7 +109,14 @@ class App extends Component {
             fixCosts={this.fixCosts}
             isAccept={isAccept}
           />
+          <Route exact path="/rest" render={() => (
+            <List items={rest.history}/>
+          )}/>
+          <Route exact path="/necessary" render={() => (
+            <List items={necessary.history}/>
+          )}/>
        </div>
+      </Router>
     );
   }
 }
