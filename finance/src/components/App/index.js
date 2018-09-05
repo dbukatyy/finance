@@ -5,51 +5,29 @@ import classes from './App.less'
 import Board from '../Board'
 import base from '../../base'
 import List from '../List'
+import Button from '../Button'
+import defaultState from '../../defaultState'
 
 class App extends Component {
 
-  state = {
-    isAccept: false,
-    category: [
-      {
-        title: 'total',
-        amount: 0
-      },
-      {
-        title: 'rest',
-        amount: 0,
-        history: [],
-        part: .2
-      },
-      {
-        title: 'necessary',
-        amount: 0,
-        history: [],
-        part: .6
-      },
-      {
-        title: 'charity',
-        amount: 0,
-        part: .1
-      },
-      {
-        title: 'economy',
-        amount: 0,
-        part: .1
-      },
-    ]
-  }
+  state = {...defaultState}
 
   componentDidMount() {
     base.syncState(`categories`, {
       context: this,
       state: 'category',
-      asArray: true
-    });
+      asArray: true,
+      then: () => this.setState({ isLoad: true })
+    })
+
     base.syncState(`isAccept`, {
       context: this,
       state: 'isAccept',
     });
+  }
+
+  onReset = () => {
+    this.setState(defaultState)
   }
 
   setAmounts = ({ amount }) => {
@@ -97,12 +75,16 @@ class App extends Component {
   }
 
   render() {
-    const { category, isAccept } = this.state;
+    const { category, isAccept, isLoad } = this.state;
     const rest = category.filter(category => category.title === 'rest')[0];
     const necessary = category.filter(category => category.title === 'necessary')[0];
     return (
+      isLoad ?
       <Router>
        <div className={classes.container}>
+          <Button click={this.onReset}>
+            <span>Reset</span>
+          </Button>
           <Board
             items={category}
             setAmounts={this.setAmounts}
@@ -110,13 +92,15 @@ class App extends Component {
             isAccept={isAccept}
           />
           <Route exact path="/rest" render={() => (
-            <List items={rest.history}/>
+            <List items={rest.history || []}/>
           )}/>
           <Route exact path="/necessary" render={() => (
-            <List items={necessary.history}/>
+            <List items={necessary.history || []}/>
           )}/>
        </div>
       </Router>
+      :
+      <p>Loading...</p>
     );
   }
 }

@@ -13,6 +13,7 @@ const categoryWrapper = (Category) => (props) => {
     case 'total':
       children = !props.isAccept && <Form isSingle  onSubmit={props.setAmounts}/>;
       break;
+    default: break;
   }
 
   return (

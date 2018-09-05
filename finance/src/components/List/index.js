@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const List = ({ items }) => {
-  return (
+  return items.length ?
     <ul>
-      {items.map(item => (
-        <li>{item}</li>
-      ))}
+      {items.map(item => <li>{item}</li>)}
     </ul>
-  )
+    :
+    <p>No data</p>
 };
 
 List.propTypes = {
