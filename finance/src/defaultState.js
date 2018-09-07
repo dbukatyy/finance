@@ -1,5 +1,5 @@
 export default {
-  isLoad: false,
+  isLoad: true,
   isAccept: false,
   category: [
     {

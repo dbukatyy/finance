@@ -5,7 +5,7 @@ import classes from './App.less'
 import Board from '../Board'
 import base from '../../base'
 import List from '../List'
-import Button from '../Button'
+import Header from '../Header'
 import defaultState from '../../defaultState'
 
 class App extends Component {
@@ -13,6 +13,8 @@ class App extends Component {
   state = {...defaultState}
 
   componentDidMount() {
+    this.setState({ isLoad: false })
+
     base.syncState(`categories`, {
       context: this,
       state: 'category',
@@ -23,11 +25,11 @@ class App extends Component {
     base.syncState(`isAccept`, {
       context: this,
       state: 'isAccept',
-    });
+    })
   }
 
   onReset = () => {
-    this.setState(defaultState)
+    this.setState({ ...defaultState })
   }
 
   setAmounts = ({ amount }) => {
@@ -58,7 +60,7 @@ class App extends Component {
     const categories = [...this.state.category]
       .map(item => {
         if (item.title === category) {
-          const spend = `${amount} - ${description}`;
+          const spend = `${amount} - ${description || ''}`;
           const history = item.history ? [...item.history, spend] : [spend];
           return {
             ...item,
@@ -78,13 +80,12 @@ class App extends Component {
     const { category, isAccept, isLoad } = this.state;
     const rest = category.filter(category => category.title === 'rest')[0];
     const necessary = category.filter(category => category.title === 'necessary')[0];
+    const balance = rest.amount + necessary.amount;
     return (
       isLoad ?
       <Router>
        <div className={classes.container}>
-          <Button click={this.onReset}>
-            <span>Reset</span>
-          </Button>
+          <Header onReset={this.onReset} balance={balance}/>
           <Board
             items={category}
             setAmounts={this.setAmounts}

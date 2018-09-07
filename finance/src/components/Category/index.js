@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import categoryWrapper from '../../hoc/CategoryWrapper'
-import classes from './Category.less'
+import { header, category, attention, value } from './Category.less'
 import Icon from '../Icon'
 
 const Category = ({ amount, title, children }) => {
   const variable = title === 'rest' || title === 'necessary';
   const danger = amount <= 0;
   return (
-    <div>
-      <h3>
+    <section className={category}>
+      <h3 className={header}>
         {title}
         {variable &&
         <NavLink to={`/${title}`}>
@@ -18,12 +18,14 @@ const Category = ({ amount, title, children }) => {
         </NavLink>
         }
       </h3>
-      <p className={danger && variable ? classes.attention : ''}>
+      <div className={value}>
         <Icon icon='money' />
-        {amount}
-      </p>
+        <span className={danger && variable ? attention : ''}>
+          {amount}
+        </span>
+      </div>
       {children}
-    </div>
+    </section>
   )
 };
 

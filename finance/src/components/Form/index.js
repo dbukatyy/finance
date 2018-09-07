@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+import classes from './Form.less'
+import Button from '../Button'
+
 class Form extends Component {
 
   static propTypes = {
@@ -28,6 +31,7 @@ class Form extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
+        className={classes.input}
          type="number"
          name="amount"
          min="0"
@@ -37,13 +41,14 @@ class Form extends Component {
         />
         { !isSingle &&
         <input
+        className={classes.input}
           type="string"
           name="description"
           placeholder="information"
           onChange={this.fieldChangeHandler}
           />
         }
-        <button>save</button>
+        <Button>Save</Button>
       </form>
     )
   }
