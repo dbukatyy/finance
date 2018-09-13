@@ -94,10 +94,10 @@ class App extends Component {
             isAccept={isAccept}
           />
           <Route exact path="/rest" render={() => (
-            <List items={rest.history || []}/>
+            <List items={rest.history || []} title={rest.title}/>
           )}/>
           <Route exact path="/necessary" render={() => (
-            <List items={necessary.history || []}/>
+            <List items={necessary.history || []} title={necessary.title} />
           )}/>
        </div>
       </Router>
