@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import classes from './Form.less'
+import { form, input} from './Form.less'
 import Button from '../Button'
 
 class Form extends Component {
@@ -29,9 +29,9 @@ class Form extends Component {
   render() {
     const { isSingle = false } = this.props;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className={form} onSubmit={this.onSubmit}>
         <input
-        className={classes.input}
+        className={input}
          type="number"
          name="amount"
          min="0"
@@ -41,7 +41,7 @@ class Form extends Component {
         />
         { !isSingle &&
         <input
-        className={classes.input}
+        className={input}
           type="string"
           name="description"
           placeholder="information"

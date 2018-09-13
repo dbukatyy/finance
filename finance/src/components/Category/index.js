@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import categoryWrapper from '../../hoc/CategoryWrapper'
-import { header, category, attention, value } from './Category.less'
+import { header, category, attention, value, footer } from './Category.less'
 import Icon from '../Icon'
 
 const Category = ({ amount, title, children }) => {
@@ -19,12 +19,14 @@ const Category = ({ amount, title, children }) => {
         }
       </h3>
       <div className={value}>
-        <Icon icon='money' />
         <span className={danger && variable ? attention : ''}>
-          {amount}
+          {amount.toFixed(2)}
         </span>
+        <Icon icon='coins' />
       </div>
-      {children}
+      <div className={footer}>
+        {children}
+      </div>
     </section>
   )
 };

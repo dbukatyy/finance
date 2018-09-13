@@ -13,7 +13,7 @@ const Header = ({ onReset, balance }) => {
         <NavLink to="/">
           <Icon icon="wallet"/>
         </NavLink>
-        <b>{balance}</b>
+        <b>{balance.toFixed(2)}</b>
       </div>
       <div className={buttons}>
         <Button click={onReset}>

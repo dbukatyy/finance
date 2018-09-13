@@ -6,6 +6,7 @@ import Board from '../Board'
 import base from '../../base'
 import List from '../List'
 import Header from '../Header'
+import Loader from '../Loader'
 import defaultState from '../../defaultState'
 
 class App extends Component {
@@ -101,7 +102,7 @@ class App extends Component {
        </div>
       </Router>
       :
-      <p>Loading...</p>
+      <Loader/>
     );
   }
 }
