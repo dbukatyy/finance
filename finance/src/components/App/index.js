@@ -8,6 +8,7 @@ import List from '../List'
 import Header from '../Header'
 import Loader from '../Loader'
 import defaultState from '../../defaultState'
+import getId from '../../utils/random'
 
 class App extends Component {
 
@@ -56,12 +57,16 @@ class App extends Component {
     })
   }
 
-  fixCosts = (category, { amount, description }) => {
+  fixCosts = (category, { amount, description = '' }) => {
     const cost = parseFloat(amount);
     const categories = [...this.state.category]
       .map(item => {
         if (item.title === category) {
-          const spend = `${amount} - ${description || ''}`;
+          const spend = {
+            id: getId(),
+            amount: Number(amount),
+            description
+          }
           const history = item.history ? [...item.history, spend] : [spend];
           return {
             ...item,
@@ -70,6 +75,26 @@ class App extends Component {
           }
         }
         return item
+      })
+
+    this.setState({
+      category: categories
+    })
+  }
+
+  delCosts = (categoryTitle, costId, amount) => {
+    const category = this.state.category.filter(category => category.title === categoryTitle)[0];
+    const newHistory = category.history.filter(item => item.id !== costId);
+    const categories = [...this.state.category]
+      .map(category => {
+        if (category.title === categoryTitle) {
+          return {
+            ...category,
+            history: newHistory,
+            amount: category.amount + Number(amount)
+          }
+        }
+        return category;
       })
 
     this.setState({
@@ -87,17 +112,25 @@ class App extends Component {
       <Router>
        <div className={classes.container}>
           <Header onReset={this.onReset} balance={balance}/>
-          <Board
-            items={category}
-            setAmounts={this.setAmounts}
-            fixCosts={this.fixCosts}
-            isAccept={isAccept}
-          />
+          <Route exact path="/" render={() => (
+            <Board
+              items={category}
+              setAmounts={this.setAmounts}
+              fixCosts={this.fixCosts}
+              isAccept={isAccept}
+            />
+          )}/>
           <Route exact path="/rest" render={() => (
-            <List items={rest.history || []} title={rest.title}/>
+            <List
+              delCosts={this.delCosts}
+              items={rest.history || []}
+              title={rest.title}/>
           )}/>
           <Route exact path="/necessary" render={() => (
-            <List items={necessary.history || []} title={necessary.title} />
+            <List
+              delCosts={this.delCosts}
+              items={necessary.history || []}
+              title={necessary.title} />
           )}/>
        </div>
       </Router>
