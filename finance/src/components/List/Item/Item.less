@@ -1,0 +1,35 @@
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    .btn {
+      display: initial;
+    }
+  }
+}
+
+.input {
+  border: none;
+  display: inline-block;
+  max-width: 70px;
+  padding: 5px 10px;
+  background: rgba(33,150, 243, .3);
+  
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
