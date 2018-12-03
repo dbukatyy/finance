@@ -130,12 +130,14 @@ class App extends Component {
     const { category, isAccept, isLoad } = this.state;
     const rest = category.filter(category => category.title === 'rest')[0];
     const necessary = category.filter(category => category.title === 'necessary')[0];
+    const total = category.filter(category => category.title === 'total')[0];
     const balance = rest.amount + necessary.amount;
+    const totalSpend = total.amount - balance;
     return (
       isLoad ?
       <Router>
        <div className={classes.container}>
-          <Header onReset={this.onReset} balance={balance}/>
+          <Header onReset={this.onReset} balance={balance} totalSpend={totalSpend}/>
           <Route exact path="/" render={() => (
             <Board
               items={category}

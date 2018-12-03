@@ -16,6 +16,7 @@ const Board = ({ items, setAmounts, fixCosts, isAccept }) => {
             setAmounts={setAmounts}
             fixCosts={fixCosts}
             isAccept={isAccept}
+            history={item.history || []}
           />
         )
       )}

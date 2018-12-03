@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { header, logo, buttons } from './Header.less'
+import { header, logo, buttons, spend } from './Header.less'
 import Icon from '../Icon'
 import Button from '../Button'
 import { NavLink } from 'react-router-dom'
 
-const Header = ({ onReset, balance }) => {
+const Header = ({ onReset, balance, totalSpend = 0 }) => {
   return (
     <header className={header}>
       <div className={logo}>
@@ -14,6 +14,7 @@ const Header = ({ onReset, balance }) => {
           <Icon icon="wallet"/>
         </NavLink>
         <b>{balance.toFixed(2)}</b>
+        <span className={spend}> - {totalSpend}</span>
       </div>
       <div className={buttons}>
         <Button click={onReset}>
@@ -30,6 +31,7 @@ const Header = ({ onReset, balance }) => {
 Header.propTypes = {
   onReset: PropTypes.func.isRequired,
   balance: PropTypes.number.isRequired,
+  totalSpend: PropTypes.number.isRequired,
 }
 
 export default Header;

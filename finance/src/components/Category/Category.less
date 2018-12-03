@@ -12,6 +12,11 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+
+  @media all and (max-width: 570px) {
+    width: 100%;
+    flex: auto;
+  }
 }
 
 .header {
@@ -39,4 +44,12 @@
 
 .footer {
   margin-top: auto;
+}
+
+.spend {
+  font-size: 16px;
+  color: rgb(28, 173, 28);
+  text-align: right;
+  font-weight: bold;
+  vertical-align: top;
 }
